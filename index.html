@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Robin Spahn – Projects</title>
+  <meta name="description" content="Projects hub pulling live repos from GitHub with filters, sorting, and badges." />
+  <link rel="preconnect" href="https://api.github.com">
+  <style>
+    :root{
+      --bg:#0b0b10; --panel:#12121a; --ink:#eaeaf2; --muted:#a9adc1; --accent:#8a7dff; --accent-2:#12d6df; --chip:#1a1a28;
+      --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    html,body{height:100%}
+    body{margin:0;background:radial-gradient(1200px 1200px at 120% -10%,rgba(18,214,223,.2),transparent 60%),
+                       radial-gradient(800px 800px at -20% 120%,rgba(138,125,255,.2),transparent 60%),
+                       var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
+    a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:28px}
+    header.hero{display:grid;gap:14px;align-items:center;margin:10px 0 18px}
+    .kicker{font-size:12px;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
+    h1{font-size:34px;margin:0 0 4px}
+    .sub{color:var(--muted)}
+    .panel{background:linear-gradient(180deg,rgba(255,255,255,.02),transparent),var(--panel);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);box-shadow:var(--shadow)}
+
+    /* Controls */
+    .controls{display:flex;flex-wrap:wrap;gap:10px;padding:14px}
+    .controls .field{display:flex;gap:8px;align-items:center;background:var(--chip);border:1px solid rgba(255,255,255,.06);padding:8px 10px;border-radius:12px}
+    .controls input[type="search"]{all:unset;width:240px}
+    select,button{background:var(--chip);border:1px solid rgba(255,255,255,.08);color:var(--ink);padding:8px 10px;border-radius:12px}
+    button{cursor:pointer}
+
+    /* Featured grid */
+    .featured{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:16px}
+    .feat-card{display:flex;flex-direction:column;gap:12px;padding:18px}
+    .feat-card h3{margin:0;font-size:18px}
+    .badges{display:flex;gap:6px;flex-wrap:wrap}
+    .badge{font-size:12px;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.12);text-decoration:none}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#0b0b10;border:none}
+
+    /* All projects */
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:16px}
+    .card{padding:14px;display:flex;flex-direction:column;gap:10px}
+    .title-row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .title-row h4{margin:0;font-size:16px}
+    .desc{color:var(--muted);min-height:38px}
+    .meta{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:12px}
+    .topics{display:flex;gap:6px;flex-wrap:wrap}
+
+    .empty{padding:22px;text-align:center;color:var(--muted)}
+
+    @media (max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.featured{grid-template-columns:1fr}}
+    @media (max-width:680px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="kicker">Projects</div>
+      <h1>Queer dev ✨ AI tinkerer — selected work</h1>
+      <p class="sub">Code lives on GitHub. Stories live here. Filter and sort below; click through for demos and source.</p>
+    </header>
+
+    <!-- Controls -->
+    <section class="panel">
+      <div class="controls">
+        <div class="field">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="q" type="search" placeholder="Search name, description, topic…" />
+        </div>
+        <div class="field">
+          <label for="lang">Lang</label>
+          <select id="lang"><option value="">Any</option></select>
+        </div>
+        <div class="field">
+          <label for="sort">Sort</label>
+          <select id="sort">
+            <option value="stars">Most ★</option>
+            <option value="updated">Recently updated</option>
+            <option value="alpha">A → Z</option>
+          </select>
+        </div>
+        <button id="reset">Reset</button>
+      </div>
+    </section>
+
+    <!-- Featured -->
+    <section class="panel featured" id="featured"></section>
+
+    <!-- All projects -->
+    <section class="panel">
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty" hidden>No projects match your filters.</div>
+    </section>
+
+    <footer style="opacity:.75;margin:22px 4px">Data from GitHub API · <span id="count">0</span> public repos · <a href="https://github.com/rspahn-dev" target="_blank" rel="noreferrer">@rspahn-dev</a></footer>
+  </div>
+
+<script>
+// ==== CONFIG: set your GitHub username and featured repos
+const GH_USER = "rspahn-dev"; // <- your account
+const FEATURED_REPOS = [
+  // add repo names you want featured (case-sensitive)
+  // e.g., "fitrpg", "price-lens", "grifkuba-app"
+];
+
+// Derived Pages URL helper
+const pagesUrl = (owner, repo) => `https://${owner}.github.io/${repo}/`;
+
+// Fetch all public repos (first page up to 100)
+async function fetchRepos() {
+  const url = `https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=updated`;
+  const res = await fetch(url, { headers: {
+    'Accept': 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28'
+  }});
+  if (!res.ok) throw new Error(`GitHub API error ${res.status}`);
+  const repos = await res.json();
+  // augment with a best-guess demo url and compact fields
+  return repos
+    .filter(r => !r.fork)
+    .map(r => ({
+      id: r.id,
+      name: r.name,
+      full_name: r.full_name,
+      html_url: r.html_url,
+      description: r.description,
+      language: r.language,
+      stargazers_count: r.stargazers_count,
+      updated_at: r.updated_at,
+      homepage: r.homepage && r.homepage.trim() ? r.homepage : null,
+      topics: r.topics || [], // topics are included for many repos; otherwise stays empty
+      archived: r.archived,
+      owner: r.owner?.login
+    }));
+}
+
+function formatDate(iso){
+  const d = new Date(iso);
+  return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+}
+
+// Build UI
+function renderFeatured(repos){
+  const mount = document.getElementById('featured');
+  const featured = FEATURED_REPOS
+    .map(name => repos.find(r => r.name === name))
+    .filter(Boolean);
+  mount.innerHTML = featured.map(r => `
+    <article class="panel feat-card">
+      <div class="badges">
+        ${r.language ? `<span class="badge">${r.language}</span>` : ''}
+        <span class="badge">★ ${r.stargazers_count}</span>
+        <span class="badge">Updated ${formatDate(r.updated_at)}</span>
+      </div>
+      <h3>${r.name}</h3>
+      <p class="desc">${r.description ?? ''}</p>
+      <div class="actions">
+        ${demoButton(r)}
+        <a class="btn" href="${r.html_url}" target="_blank" rel="noreferrer">Source</a>
+        <a class="btn" href="/case-studies/${r.name}.html">Case study</a>
+      </div>
+    </article>
+  `).join('');
+}
+
+function demoButton(r){
+  const url = r.homepage || pagesUrl(r.owner, r.name);
+  return `<a class="btn primary" href="${url}" target="_blank" rel="noreferrer">Live demo</a>`;
+}
+
+function renderLangOptions(repos){
+  const sel = document.getElementById('lang');
+  const langs = Array.from(new Set(repos.map(r => r.language).filter(Boolean))).sort();
+  sel.innerHTML = '<option value="">Any</option>' + langs.map(l => `<option>${l}</option>`).join('');
+}
+
+function renderGrid(repos){
+  const q = document.getElementById('q').value.trim().toLowerCase();
+  const lang = document.getElementById('lang').value;
+  const sort = document.getElementById('sort').value;
+
+  let list = repos.slice();
+
+  if (q){
+    list = list.filter(r =>
+      (r.name && r.name.toLowerCase().includes(q)) ||
+      (r.description && r.description.toLowerCase().includes(q)) ||
+      (r.topics && r.topics.join(' ').toLowerCase().includes(q))
+    );
+  }
+  if (lang){ list = list.filter(r => r.language === lang); }
+
+  if (sort === 'stars') list.sort((a,b)=>b.stargazers_count - a.stargazers_count);
+  else if (sort === 'updated') list.sort((a,b)=> new Date(b.updated_at) - new Date(a.updated_at));
+  else if (sort === 'alpha') list.sort((a,b)=> a.name.localeCompare(b.name));
+
+  const grid = document.getElementById('grid');
+  const empty = document.getElementById('empty');
+
+  grid.innerHTML = list.map(r => `
+    <article class="panel card">
+      <div class="title-row">
+        <h4>${r.name}</h4>
+        <div class="badges">
+          ${r.language ? `<span class="badge">${r.language}</span>` : ''}
+          <span class="badge">★ ${r.stargazers_count}</span>
+        </div>
+      </div>
+      <p class="desc">${r.description ?? ''}</p>
+      <div class="topics">
+        ${(r.topics || []).slice(0,6).map(t=>`<span class="badge">#${t}</span>`).join('')}
+      </div>
+      <div class="meta">
+        <span>Updated ${formatDate(r.updated_at)}</span>
+        ${r.archived ? '<span>· Archived</span>' : ''}
+      </div>
+      <div class="actions">
+        ${demoButton(r)}
+        <a class="btn" href="${r.html_url}" target="_blank" rel="noreferrer">Source</a>
+        <a class="btn" href="/case-studies/${r.name}.html">Case study</a>
+      </div>
+    </article>
+  `).join('');
+
+  empty.hidden = list.length !== 0;
+  document.getElementById('count').textContent = list.length;
+}
+
+(async function init(){
+  const all = await fetchRepos().catch(err => ({ error: err.message }));
+  if (all.error){
+    document.getElementById('grid').outerHTML = `<div class="empty">${all.error}. You might be rate limited. Try again soon or add a GitHub token fetch.</div>`;
+    return;
+  }
+  window.__REPOS__ = all;
+  renderLangOptions(all);
+  renderFeatured(all);
+  renderGrid(all);
+
+  // wire controls
+  document.getElementById('q').addEventListener('input', ()=>renderGrid(all));
+  document.getElementById('lang').addEventListener('change', ()=>renderGrid(all));
+  document.getElementById('sort').addEventListener('change', ()=>renderGrid(all));
+  document.getElementById('reset').addEventListener('click', ()=>{
+    document.getElementById('q').value='';
+    document.getElementById('lang').value='';
+    document.getElementById('sort').value='stars';
+    renderGrid(all);
+  });
+})();
+</script>
+</body>
+</html>
