@@ -6,27 +6,41 @@
   <title>Robin Spahn – Projects</title>
   <meta name="description" content="Projects hub pulling live repos from GitHub with filters, sorting, and badges." />
   <link rel="preconnect" href="https://api.github.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#0b0b10">
   <style>
     :root{
-      --bg:#0b0b10; --panel:#12121a; --ink:#eaeaf2; --muted:#a9adc1; --accent:#8a7dff; --accent-2:#12d6df; --chip:#1a1a28;
-      --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35);
+      --bg:#0b0b10; --panel:#12121a; --ink:#eef0f6; --muted:#a9adc1; --accent:#8a7dff; --accent-2:#12d6df; --chip:#171726;
+      --radius:20px; --shadow:0 12px 40px rgba(0,0,0,.35);
     }
     html,body{height:100%}
-    body{margin:0;background:radial-gradient(1200px 1200px at 120% -10%,rgba(18,214,223,.2),transparent 60%),
-                       radial-gradient(800px 800px at -20% 120%,rgba(138,125,255,.2),transparent 60%),
-                       var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
+    body{margin:0;background:
+      radial-gradient(1200px 1200px at 120% -10%,rgba(18,214,223,.18),transparent 60%),
+      radial-gradient(900px 900px at -20% 120%,rgba(138,125,255,.18),transparent 60%),
+      var(--bg);
+      color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
     a{color:inherit}
     .wrap{max-width:1100px;margin:0 auto;padding:28px}
-    header.hero{display:grid;gap:14px;align-items:center;margin:10px 0 18px}
+
+    /* Hero */
+    header.hero{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;margin:6px 0 14px}
+    .avatar{width:72px;height:72px;border-radius:50%;border:1px solid rgba(255,255,255,.1);box-shadow:var(--shadow);object-fit:cover}
     .kicker{font-size:12px;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
-    h1{font-size:34px;margin:0 0 4px}
-    .sub{color:var(--muted)}
-    .panel{background:linear-gradient(180deg,rgba(255,255,255,.02),transparent),var(--panel);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);box-shadow:var(--shadow)}
+    h1{font-size:36px;margin:0 0 6px;line-height:1.15}
+    .sub{color:var(--muted);margin:0}
+    .stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+    .stat{font-size:12px;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
+
+    /* Panels */
+    .panel{background:linear-gradient(180deg,rgba(255,255,255,.02),transparent),var(--panel);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);box-shadow:var(--shadow);transition:transform .15s ease, border-color .2s ease}
+    .panel.card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.12)}
 
     /* Controls */
     .controls{display:flex;flex-wrap:wrap;gap:10px;padding:14px}
     .controls .field{display:flex;gap:8px;align-items:center;background:var(--chip);border:1px solid rgba(255,255,255,.06);padding:8px 10px;border-radius:12px}
-    .controls input[type="search"]{all:unset;width:240px}
+    .controls input[type="search"]{all:unset;width:260px}
     select,button{background:var(--chip);border:1px solid rgba(255,255,255,.08);color:var(--ink);padding:8px 10px;border-radius:12px}
     button{cursor:pointer}
 
@@ -37,7 +51,8 @@
     .badges{display:flex;gap:6px;flex-wrap:wrap}
     .badge{font-size:12px;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
     .actions{display:flex;gap:8px;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.12);text-decoration:none}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.12);text-decoration:none;transition:transform .12s ease, opacity .2s ease}
+    .btn:hover{transform:translateY(-1px)}
     .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#0b0b10;border:none}
 
     /* All projects */
@@ -52,15 +67,23 @@
     .empty{padding:22px;text-align:center;color:var(--muted)}
 
     @media (max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.featured{grid-template-columns:1fr}}
-    @media (max-width:680px){.grid{grid-template-columns:1fr}}
+    @media (max-width:680px){header.hero{grid-template-columns:1fr;gap:10px}.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
   <div class="wrap">
     <header class="hero">
-      <div class="kicker">Projects</div>
-      <h1>Queer dev ✨ AI tinkerer — selected work</h1>
-      <p class="sub">Code lives on GitHub. Stories live here. Filter and sort below; click through for demos and source.</p>
+      <img id="avatar" class="avatar" alt="Avatar" src="" />
+      <div>
+        <div class="kicker">Projects</div>
+        <h1>Queer dev ✨ AI tinkerer — selected work</h1>
+        <p class="sub" id="bio">Code lives on GitHub. Stories live here. Filter and sort below; click through for demos and source.</p>
+        <div class="stats" id="stats" hidden>
+          <span class="stat" id="stat-repos"></span>
+          <span class="stat" id="stat-followers"></span>
+          <span class="stat" id="stat-following"></span>
+        </div>
+      </div>
     </header>
 
     <!-- Controls -->
@@ -145,13 +168,28 @@ function formatDate(iso){
 // Build UI
 function renderFeatured(repos){
   const mount = document.getElementById('featured');
-  const featured = FEATURED_REPOS
-    .map(name => repos.find(r => r.name === name))
-    .filter(Boolean);
-  mount.innerHTML = featured.map(r => `
+  // If FEATURED_REPOS not set, pick top 3 by stars
+  const selected = (FEATURED_REPOS && FEATURED_REPOS.length)
+    ? FEATURED_REPOS.map(name => repos.find(r => r.name === name)).filter(Boolean)
+    : repos.slice().sort((a,b)=>b.stargazers_count - a.stargazers_count).slice(0,3);
+  if (!selected.length){ mount.closest('section').style.display = 'none'; return; }
+  mount.innerHTML = selected.map(r => `
     <article class="panel feat-card">
       <div class="badges">
         ${r.language ? `<span class="badge">${r.language}</span>` : ''}
+        <span class="badge">★ ${r.stargazers_count}</span>
+        <span class="badge">Updated ${formatDate(r.updated_at)}</span>
+      </div>
+      <h3>${r.name}</h3>
+      <p class="desc">${r.description ?? ''}</p>
+      <div class="actions">
+        ${demoButton(r)}
+        <a class="btn" href="${r.html_url}" target="_blank" rel="noreferrer">Source</a>
+        <a class="btn" href="/case-studies/${r.name}.html">Case study</a>
+      </div>
+    </article>
+  `).join('');
+}</span>` : ''}
         <span class="badge">★ ${r.stargazers_count}</span>
         <span class="badge">Updated ${formatDate(r.updated_at)}</span>
       </div>
@@ -230,6 +268,21 @@ function renderGrid(repos){
 }
 
 (async function init(){
+  // Fetch profile for avatar + bio + stats
+  try {
+    const u = await fetch(`https://api.github.com/users/${GH_USER}`, { headers: { 'Accept': 'application/vnd.github+json' }}).then(r=>r.json());
+    const avatar = document.getElementById('avatar');
+    if (u && u.avatar_url){ avatar.src = u.avatar_url; }
+    if (u && u.bio){ document.getElementById('bio').textContent = u.bio; }
+    if (u && typeof u.public_repos === 'number'){
+      const s = document.getElementById('stats');
+      document.getElementById('stat-repos').textContent = `${u.public_repos} public repos`;
+      document.getElementById('stat-followers').textContent = `${u.followers} followers`;
+      document.getElementById('stat-following').textContent = `${u.following} following`;
+      s.hidden = false;
+    }
+  } catch (e) { /* ignore */ }
+
   const all = await fetchRepos().catch(err => ({ error: err.message }));
   if (all.error){
     document.getElementById('grid').outerHTML = `<div class="empty">${all.error}. You might be rate limited. Try again soon or add a GitHub token fetch.</div>`;
