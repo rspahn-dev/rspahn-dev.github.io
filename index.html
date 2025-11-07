@@ -10,11 +10,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="icon" href="/assets/images/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/logo.svg" type="image/svg+xml" />
+  <link rel="canonical" href="https://robinspahn.com/">
+  <meta property="og:site_name" content="Robin Spahn" />
+  <meta property="og:title" content="Robin Spahn — Queer Dev ✨ AI Tinkerer" />
+  <meta property="og:description" content="Projects, case studies, and experiments at the edge of AI and accessible design." />
+  <meta property="og:image" content="https://robinspahn.com/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <style>
     :root{
       --bg:#0b0b10; --panel:#12121a; --ink:#eef0f6; --muted:#a9adc1; --chip:#171726;
       --accent:#8a7dff; --accent-2:#12d6df; --radius:20px; --shadow:0 12px 40px rgba(0,0,0,.35);
+      /* fluid type scale */
+      --step--1: clamp(12px, 0.78rem + 0.1vw, 14px);
+      --step-0:  clamp(14px, 0.90rem + 0.2vw, 16px);
+      --step-1:  clamp(18px, 1.05rem + 0.6vw, 22px);
+      --step-2:  clamp(22px, 1.20rem + 1.0vw, 28px);
+      --step-3:  clamp(28px, 1.60rem + 1.4vw, 36px);
     }
     html, body { margin: 0; padding: 0; }
     body{
@@ -23,9 +35,12 @@
         radial-gradient(900px 900px at -20% 120%,rgba(138,125,255,.18),transparent 60%),
         var(--bg);
       color:var(--ink);
-      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif
+      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      font-size: var(--step-0);
     }
     a{color:inherit;text-decoration:none}
+    img, video, iframe{max-width:100%;height:auto}
+
     .wrap{max-width:1100px; margin:0 auto; padding:28px; padding-top:0}
 
     /* Banner */
@@ -43,12 +58,12 @@
     .nav a{opacity:.9}
     .nav a:hover{opacity:1}
     .nav .links{display:flex;gap:14px}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.12);}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.12);min-height:44px}
     .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#0b0b10;border:none}
 
     /* Hero */
     .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;margin:18px 0}
-    .hero h1{font-size:40px;line-height:1.12;margin:0 0 8px}
+    .hero h1{font-size:var(--step-3);line-height:1.12;margin:0 0 8px}
     .kicker{font-size:12px;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
     .lead{color:var(--muted);margin:6px 0 16px}
     .cta{display:flex;gap:10px;flex-wrap:wrap}
@@ -60,32 +75,36 @@
 
     /* Latest Work */
     .section{margin:28px 0}
-    .section h2{margin:0 0 8px;font-size:22px}
+    .section h2{margin:0 0 8px;font-size:var(--step-2)}
     .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-    .card h3{margin:0 0 6px;font-size:16px}
+    .card h3{margin:0 0 6px;font-size:var(--step-1)}
     .badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
     .badge{font-size:12px;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
     .card .desc{color:var(--muted);min-height:38px}
 
-    /* Fluid type that scales from small phones to desktops */
-    :root{
-      --step--1: clamp(12px, 0.78rem + 0.1vw, 14px);
-      --step-0:  clamp(14px, 0.9rem + 0.2vw, 16px);
-      --step-1:  clamp(18px, 1.05rem + 0.6vw, 22px);
-      --step-2:  clamp(22px, 1.2rem + 1.0vw, 28px);
-      --step-3:  clamp(28px, 1.6rem + 1.4vw, 36px);
-    }
-    body{ font-size: var(--step-0); }
-    h1{ font-size: var(--step-3); }
-    h2{ font-size: var(--step-2); }
-    h3{ font-size: var(--step-1); }
-
-
     /* Footer */
     footer{opacity:.75;margin:26px 4px}
 
-    @media (max-width:980px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media (max-width:680px){.grid{grid-template-columns:1fr}}
+    /* Responsive */
+    @media (max-width:980px){
+      .wrap{ padding: 20px; }
+      .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+      .hero{ grid-template-columns: 1fr; gap: 16px; }
+    }
+    @media (max-width:680px){
+      .wrap{ padding: 14px; }
+      .site-banner{ max-height: 200px; border-radius: 0 0 14px 14px; margin-bottom: 12px; }
+      .nav .links{ gap: 10px; flex-wrap: wrap; }
+      .btn{ padding: 10px 12px; border-radius: 10px; width: auto; }
+      .cta{ flex-direction: column; align-items: stretch; }
+      .cta .btn{ width: 100%; justify-content: center; }
+      .grid{ grid-template-columns: 1fr; gap: 12px; }
+      .panel.card{ padding: 14px; }
+      .badge{ padding: 4px 7px; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{ animation: none !important; transition: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -95,8 +114,9 @@
     <!-- NAV -->
     <nav class="nav">
       <div class="links">
-        <a href="/about/">About</a>
+        <a aria-current="page" class="badge" href="/">Home</a>
         <a href="/projects/">Projects</a>
+        <a href="/about/">About</a>
         <a href="/case-studies/">Case Studies</a>
         <a class="btn" href="https://github.com/rspahn-dev" target="_blank" rel="noreferrer">GitHub</a>
       </div>
@@ -127,7 +147,7 @@
       </div>
     </section>
 
-    <!-- FEATURED CALLOUTS -->
+    <!-- FOCUS CALLOUTS -->
     <section class="section">
       <h2>What I focus on</h2>
       <div class="grid">
@@ -148,7 +168,7 @@
 
     <!-- FOOTER -->
     <footer>
-      © <span id="year"></span> Robin Spahn · <a href="/projects/">Projects</a> · <a href="/about/">About</a> · <a href="mailto:hello@rspahn.dev">hello@rspahn.dev</a>
+      © <span id="year"></span> Robin Spahn · <a href="/projects/">Projects</a> · <a href="mailto:hello@rspahn.dev">hello@rspahn.dev</a>
     </footer>
   </div>
 
@@ -206,20 +226,18 @@ function renderLatest(repos){
 (async function init(){
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Update hero bio if available; safe even if #bio is missing
   try {
     const u = await fetchUser();
     const bioEl = document.getElementById('bio');
     if (bioEl && u && u.bio) bioEl.textContent = u.bio;
-  } catch(e){ /* ignore for resilience */ }
+  } catch(e){ /* ignore */ }
 
-  // Render Latest from repos
   try {
     const repos = await fetchRepos();
     renderLatest(repos);
   } catch(e){
     const empty = document.getElementById('latest-empty');
-    if (empty) empty.textContent = "GitHub rate limited or unavailable right now. Try again in a bit.";
+    if (empty) empty.textContent = "GitHub rate limited or unavailable right now. Try again later.";
   }
 })();
 </script>
