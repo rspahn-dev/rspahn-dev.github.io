@@ -1,1 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projects — Robin Spahn</title>
+  <meta name="description" content="Live projects pulled from GitHub with search, filters, badges, and featured highlights." />
+  <meta name="theme-color" content="#0b0b10" />
+  <link rel="preconnect" href="https://api.github.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="/assets/images/logo.svg" type="image/svg+xml" />
+  <link rel="canonical" href="https://robinspahn.com/projects/" />
+  <style>
+    :root{
+      --bg:#0b0b10; --panel:#12121a; --ink:#eef0f6; --muted:#a9adc1; --accent:#8a7dff; --accent-2:#12d6df; --chip:#171726;
+      --radius:20px; --shadow:0 12px 40px rgba(0,0,0,.35);
+    }
+    html,body{margin:0;padding:0}
+    body{background:
+      radial-gradient(1200px 1200px at 120% -10%,rgba(18,214,223,.18),transparent 60%),
+      radial-gradient(900px 900px at -20% 120%,rgba(138,125,255,.18),transparent 60%),
+      var(--bg); color:var(--ink); font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1100px;margin:0 auto;padding:28px}
 
+    /* Banner */
+    .site-banner{width:100%;height:auto;display:block;border-bottom:1px solid rgba(255,255,255,.08);box-shadow:0 4px 20px rgba(0,0,0,.35);border-radius:0 0 var(--radius) var(--radius);margin-bottom:18px;object-fit:cover;max-height:320px}
+
+    /* Header */
+    header.hero{display:grid;grid-template-columns:1fr;gap:10px;margin:6px 0 14px}
+    .kicker{font-size:12px;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
+    h1{font-size:34px;margin:0 0 6px;line-height:1.15}
+    .sub{color:var(--muted);margin:0}
+
+    /* Panels */
+    .panel{background:linear-gradient(180deg,rgba(255,255,255,.02),transparent),var(--panel);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);box-shadow:var(--shadow);transition:transform .15s ease, border-color .2s ease}
+    .panel.card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.12)}
+
+    /* Nav */
+    .nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+    .nav .links{display:flex;gap:14px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.12)}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#0b0b10;border:none}
+
+    /* Controls */
+    .controls{display:flex;flex-wrap:wrap;gap:10px;padding:14px}
+    .controls .field{display:flex;gap:8px;align-items:center;background:var(--chip);border:1px solid rgba(255,255,255,.06);padding:8px 10px;border-radius:12px}
+    .controls input[type="search"]{all:unset;width:260px}
+    select,button{background:var(--chip);border:1px solid rgba(255,255,255,.08);color:var(--ink);padding:8px 10px;border-radius:12px}
+    button{cursor:pointer}
+
+    /* Featured grid */
+    .featured{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:16px}
+    .feat-card{display:flex;flex-direction:column;gap:12px;padding:18px}
+    .feat-card h3{margin:0;font-size:18px}
+    .badges{display:flex;gap:6px;flex-wrap:wrap}
+    .badge{font-size:12px;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+
+    /* All projects */
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:16px}
+    .card{padding:14px;display:flex;flex-direction:column;gap:10px}
+    .title-row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .title-row h4{margin:0;font-size:16px}
+    .desc{color:var(--muted);min-height:38px}
+    .meta{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:12px}
+    .topics{display:flex;gap:6px;flex-wrap:wrap}
+
+    .empty{padding:22px;text-align:center;color:var(--muted)}
+
+    footer{opacity:.75;margin:22px 4px}
+
+    @media (max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.featured{grid-template-columns:1fr}}
+    @media (max-width:680px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <img class="site-banner" src="/assets/images/website_banner.png" alt="Banner for Robin Spahn">
+
+    <!-- NAV -->
+    <nav class="nav" aria-label="Primary">
+      <div class="links">
+        <a href="/">Home</a>
+        <a aria-current="page" class="badge" href="/projects/">Projects</a>
+        <a href="/about/">About</a>
+        <a href="/case-studies/">Case Studies</a>
+        <a class="btn" href="https://github.com/rspahn-dev" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+      <div>
+        <div class="kicker">Projects</div>
+        <h1>Selected work from my GitHub</h1>
+        <p class="sub">Search, filter, and click through for live demos, source, and case studies.</p>
+      </div>
+    </header>
+
+    <!-- Controls -->
+    <section class="panel">
+      <div class="controls">
+        <div class="field">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="q" type="search" placeholder="Search name, description, topic…" />
+        </div>
+        <div class="field">
+          <label for="lang">Lang</label>
+          <select id="lang"><option value="">Any</option></select>
+        </div>
+        <div class="field">
+          <label for="sort">Sort</label>
+          <select id="sort">
+            <option value="stars">Most ★</option>
+            <option value="updated">Recently updated</option>
+            <option value="alpha">A → Z</option>
+          </select>
+        </div>
+        <button id="reset">Reset</button>
+        <div style="margin-left:auto" class="muted"><span id="count">0</span> repos</div>
+      </div>
+    </section>
+
+    <!-- Featured -->
+    <section class="panel featured" id="featured"></section>
+
+    <!-- All projects -->
+    <section class="panel">
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty" hidden>No projects match your filters.</div>
+    </section>
+
+    <footer>Data from GitHub API · <a href="https://github.com/rspahn-dev" target="_blank" rel="noreferrer">@rspahn-dev</a></footer>
+  </div>
+
+<script>
+// ==== CONFIG: owners and featured repos
+const GH_OWNERS = ["rspahn-dev"]; // Add more owners e.g., ["rspahn-dev","grifkuba"]
+const FEATURED_REPOS = [
+  // Add repo names or full_name to feature (e.g., "rspahn-dev/price-lens")
+  // "fitrpg", "price-lens"
+];
+
+const GH_HEADERS = {
+  'Accept': 'application/vnd.github+json',
+  'X-GitHub-Api-Version': '2022-11-28'
+};
+
+const pagesUrl = (owner, repo) => `https://${owner}.github.io/${repo}/`;
+
+async function fetchReposFor(owner){
+  const url = `https://api.github.com/users/${owner}/repos?per_page=100&sort=updated`;
+  const res = await fetch(url, { headers: GH_HEADERS });
+  if(!res.ok) throw new Error(`GitHub API ${res.status} for ${owner}`);
+  const data = await res.json();
+  return data.filter(r=>!r.fork).map(r=>({
+    id: r.id,
+    name: r.name,
+    full_name: r.full_name,
+    owner: r.owner?.login,
+    html_url: r.html_url,
+    description: r.description,
+    language: r.language,
+    stargazers_count: r.stargazers_count,
+    updated_at: r.updated_at,
+    homepage: r.homepage && r.homepage.trim() ? r.homepage : null,
+    topics: r.topics || [],
+    archived: r.archived
+  }));
+}
+
+async function fetchAllRepos(){
+  const lists = await Promise.allSettled(GH_OWNERS.map(fetchReposFor));
+  const repos = lists.flatMap(x => x.status === 'fulfilled' ? x.value : []);
+  // de-dup by id in case an owner is duplicated
+  const byId = new Map(repos.map(r=>[r.id,r]));
+  return Array.from(byId.values());
+}
+
+function fmtDate(iso){
+  const d = new Date(iso);
+  return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+}
+
+function demoButton(r){
+  const url = r.homepage || pagesUrl(r.owner, r.name);
+  return `<a class="btn primary" href="${url}" target="_blank" rel="noreferrer">Live demo</a>`;
+}
+
+function renderLangOptions(repos){
+  const sel = document.getElementById('lang');
+  const langs = Array.from(new Set(repos.map(r => r.language).filter(Boolean))).sort();
+  sel.innerHTML = '<option value="">Any</option>' + langs.map(l => `<option>${l}</option>`).join('');
+}
+
+function renderFeatured(repos){
+  const mount = document.getElementById('featured');
+  let selected = [];
+  if (FEATURED_REPOS && FEATURED_REPOS.length){
+    selected = FEATURED_REPOS.map(name => repos.find(r => r.name === name || r.full_name === name)).filter(Boolean);
+  } else {
+    selected = repos.slice().sort((a,b)=>b.stargazers_count - a.stargazers_count).slice(0,3);
+  }
+  if (!selected.length){
+    const section = mount.closest('section');
+    if (section) section.style.display = 'none';
+    return;
+  }
+  mount.innerHTML = selected.map(r => `
+    <article class="panel feat-card">
+      <div class="badges">
+        ${r.language ? `<span class="badge">${r.language}</span>` : ''}
+        <span class="badge">★ ${r.stargazers_count}</span>
+        <span class="badge">Updated ${fmtDate(r.updated_at)}</span>
+        <span class="badge">@${r.owner}</span>
+      </div>
+      <h3>${r.name}</h3>
+      <p class="desc">${r.description ?? ''}</p>
+      <div class="actions">
+        ${demoButton(r)}
+        <a class="btn" href="${r.html_url}" target="_blank" rel="noreferrer">Source</a>
+        <a class="btn" href="/case-studies/${r.name}.html">Case study</a>
+      </div>
+    </article>
+  `).join('');
+}
+
+function renderGrid(repos){
+  const q = document.getElementById('q').value.trim().toLowerCase();
+  const lang = document.getElementById('lang').value;
+  const sort = document.getElementById('sort').value;
+
+  let list = repos.slice();
+
+  if (q){
+    list = list.filter(r =>
+      (r.name && r.name.toLowerCase().includes(q)) ||
+      (r.description && r.description.toLowerCase().includes(q)) ||
+      (r.owner && r.owner.toLowerCase().includes(q)) ||
+      (r.topics && r.topics.join(' ').toLowerCase().includes(q))
+    );
+  }
+  if (lang){ list = list.filter(r => r.language === lang); }
+
+  if (sort === 'stars') list.sort((a,b)=>b.stargazers_count - a.stargazers_count);
+  else if (sort === 'updated') list.sort((a,b)=> new Date(b.updated_at) - new Date(a.updated_at));
+  else if (sort === 'alpha') list.sort((a,b)=> a.name.localeCompare(b.name));
+
+  const grid = document.getElementById('grid');
+  const empty = document.getElementById('empty');
+
+  grid.innerHTML = list.map(r => `
+    <article class="panel card">
+      <div class="title-row">
+        <h4>${r.name}</h4>
+        <div class="badges">
+          ${r.language ? `<span class="badge">${r.language}</span>` : ''}
+          <span class="badge">★ ${r.stargazers_count}</span>
+          <span class="badge">@${r.owner}</span>
+        </div>
+      </div>
+      <p class="desc">${r.description ?? ''}</p>
+      <div class="topics">
+        ${(r.topics || []).slice(0,6).map(t=>`<span class="badge">#${t}</span>`).join('')}
+      </div>
+      <div class="meta">
+        <span>Updated ${fmtDate(r.updated_at)}</span>
+        ${r.archived ? '<span>· Archived</span>' : ''}
+      </div>
+      <div class="actions">
+        ${demoButton(r)}
+        <a class="btn" href="${r.html_url}" target="_blank" rel="noreferrer">Source</a>
+        <a class="btn" href="/case-studies/${r.name}.html">Case study</a>
+      </div>
+    </article>
+  `).join('');
+
+  empty.hidden = list.length !== 0;
+  document.getElementById('count').textContent = list.length;
+}
+
+(async function init(){
+  try {
+    const all = await fetchAllRepos();
+    window.__REPOS__ = all;
+    renderLangOptions(all);
+    renderFeatured(all);
+    renderGrid(all);
+  } catch(err){
+    const grid = document.getElementById('grid');
+    if (grid) grid.outerHTML = `<div class="empty">${err.message}. You might be rate-limited. Try again later or add a GitHub token.</div>`;
+  }
+
+  // Wire controls
+  document.getElementById('q').addEventListener('input', ()=>renderGrid(window.__REPOS__ || []));
+  document.getElementById('lang').addEventListener('change', ()=>renderGrid(window.__REPOS__ || []));
+  document.getElementById('sort').addEventListener('change', ()=>renderGrid(window.__REPOS__ || []));
+  document.getElementById('reset').addEventListener('click', ()=>{
+    document.getElementById('q').value='';
+    document.getElementById('lang').value='';
+    document.getElementById('sort').value='stars';
+    renderGrid(window.__REPOS__ || []);
+  });
+})();
+</script>
+</body>
+</html>
