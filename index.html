@@ -10,44 +10,36 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="/assets/images/logo.svg" type="image/svg+xml">
   <style>
     :root{
       --bg:#0b0b10; --panel:#12121a; --ink:#eef0f6; --muted:#a9adc1; --chip:#171726;
       --accent:#8a7dff; --accent-2:#12d6df; --radius:20px; --shadow:0 12px 40px rgba(0,0,0,.35);
     }
-    /* html,body{height:100%} */
-    html, body {
-      margin: 0;
-      padding: 0;
+    html, body { margin: 0; padding: 0; }
+    body{
+      background:
+        radial-gradient(1200px 1200px at 120% -10%,rgba(18,214,223,.18),transparent 60%),
+        radial-gradient(900px 900px at -20% 120%,rgba(138,125,255,.18),transparent 60%),
+        var(--bg);
+      color:var(--ink);
+      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif
     }
-    body{margin:0;background:
-      radial-gradient(1200px 1200px at 120% -10%,rgba(18,214,223,.18),transparent 60%),
-      radial-gradient(900px 900px at -20% 120%,rgba(138,125,255,.18),transparent 60%),
-      var(--bg); color:var(--ink); font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
     a{color:inherit;text-decoration:none}
-    .wrap{max-width:1100px;
-          margin:0 auto;
-          padding:28px;
-          padding-top: 0;     /* no extra space above banner */
-          margin-top: 0;
-    }
+    .wrap{max-width:1100px; margin:0 auto; padding:28px; padding-top:0}
+
+    /* Banner */
     .site-banner {
-      max-height: 320px;
-      object-fit: cover;
-      width: 100%;
-      height: auto;
-      display: block;
+      width: 100%; height: auto; display: block;
       border-bottom: 1px solid rgba(255,255,255,.08);
       box-shadow: 0 4px 20px rgba(0,0,0,.35);
       border-radius: 0 0 var(--radius) var(--radius);
       margin-bottom: 18px;
-      object-fit: cover;
+      object-fit: cover; max-height: 320px;
     }
 
     /* Nav */
     .nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-    .brand{display:flex;align-items:center;gap:10px}
-    .brand img{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.1)}
     .nav a{opacity:.9}
     .nav a:hover{opacity:1}
     .nav .links{display:flex;gap:14px}
@@ -60,6 +52,8 @@
     .kicker{font-size:12px;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
     .lead{color:var(--muted);margin:6px 0 16px}
     .cta{display:flex;gap:10px;flex-wrap:wrap}
+
+    /* Panels & cards */
     .panel{background:linear-gradient(180deg,rgba(255,255,255,.02),transparent),var(--panel);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);box-shadow:var(--shadow)}
     .panel.card{padding:18px}
     .pill{font-size:12px;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
@@ -83,6 +77,7 @@
 <body>
   <div class="wrap">
     <img class="site-banner" src="/assets/images/website_banner.png" alt="Banner image for Robin Spahn — Queer Dev ✨ AI Tinkerer">
+
     <!-- NAV -->
     <nav class="nav">
       <div class="links">
@@ -98,14 +93,14 @@
       <div>
         <div class="kicker">Queer Dev ✨ AI Tinkerer</div>
         <h1>Building playful, accessible tools with AI — and telling the story behind the code.</h1>
-        <p class="lead" id="bio">I work across creative coding, community tech, and experimental UX. Browse my latest work, read deep‑dive case studies, or reach out to collaborate.</p>
+        <p class="lead" id="bio">I work across creative coding, community tech, and experimental UX. Browse my latest work, read deep-dive case studies, or reach out to collaborate.</p>
         <div class="cta">
           <a class="btn primary" href="/projects/">View Projects</a>
           <a class="btn" href="/about/">About Me</a>
           <a class="btn" href="/RobinSpahn_Resume.pdf" target="_blank" rel="noreferrer">Resume</a>
         </div>
         <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
-          <span class="pill">Accessibility‑first</span>
+          <span class="pill">Accessibility-first</span>
           <span class="pill">AI + Frontend</span>
           <span class="pill">Community tech</span>
           <span class="pill">Open source</span>
@@ -123,16 +118,16 @@
       <h2>What I focus on</h2>
       <div class="grid">
         <article class="panel card">
-          <h3>AI‑powered UIs</h3>
+          <h3>AI-powered UIs</h3>
           <p class="desc">Prototyping assistants, dashboards, and creative tools with LLMs, audio, and image models.</p>
         </article>
         <article class="panel card">
           <h3>Accessible design</h3>
-          <p class="desc">WCAG‑minded components, keyboard navigation, color contrast, and screen‑reader semantics.</p>
+          <p class="desc">WCAG-minded components, keyboard navigation, color contrast, and screen-reader semantics.</p>
         </article>
         <article class="panel card">
           <h3>Community platforms</h3>
-          <p class="desc">Open‑source sites/apps for queer gaming and local groups — sustainable workflows & docs.</p>
+          <p class="desc">Open-source sites/apps for queer gaming and local groups — sustainable workflows & docs.</p>
         </article>
       </div>
     </section>
@@ -144,177 +139,74 @@
   </div>
 
 <script>
-// ==== CONFIG: set your GitHub username and featured repos
-const GH_USER = "rspahn-dev"; // <- your account
-const FEATURED_REPOS = [
-  // add repo names you want featured (case-sensitive)
-  // e.g., "fitrpg", "price-lens", "grifkuba-app"
-];
+/* ==== CONFIG ==== */
+const GH_USER = "rspahn-dev";
+const GH_HEADERS = { 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
 
-// Derived Pages URL helper
-const pagesUrl = (owner, repo) => `https://${owner}.github.io/${repo}/`;
+/* ==== HELPERS ==== */
+function sortByUpdated(a,b){ return new Date(b.updated_at) - new Date(a.updated_at); }
+function fmtDate(iso){ return new Date(iso).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}); }
 
-// Fetch all public repos (first page up to 100)
-async function fetchRepos() {
-  const url = `https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=updated`;
-  const res = await fetch(url, { headers: {
-    'Accept': 'application/vnd.github+json',
-    'X-GitHub-Api-Version': '2022-11-28'
-  }});
-  if (!res.ok) throw new Error(`GitHub API error ${res.status}`);
-  const repos = await res.json();
-  // augment with a best-guess demo url and compact fields
-  return repos
-    .filter(r => !r.fork)
-    .map(r => ({
-      id: r.id,
-      name: r.name,
-      full_name: r.full_name,
-      html_url: r.html_url,
-      description: r.description,
-      language: r.language,
-      stargazers_count: r.stargazers_count,
-      updated_at: r.updated_at,
-      homepage: r.homepage && r.homepage.trim() ? r.homepage : null,
-      topics: r.topics || [], // topics included for many repos
-      archived: r.archived,
-      owner: r.owner?.login
-    }));
+/* ==== DATA FETCH ==== */
+async function fetchUser(){ 
+  const r = await fetch(`https://api.github.com/users/${GH_USER}`, { headers: GH_HEADERS });
+  if(!r.ok) throw new Error(`GitHub API ${r.status}`);
+  return r.json();
+}
+async function fetchRepos(){
+  const r = await fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=updated`, { headers: GH_HEADERS });
+  if(!r.ok) throw new Error(`GitHub API ${r.status}`);
+  return (await r.json()).filter(x => !x.fork);
 }
 
-function formatDate(iso){
-  const d = new Date(iso);
-  return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
-}
-
-// Build UI
-function renderFeatured(repos){
-  const mount = document.getElementById('featured');
-  // If FEATURED_REPOS not set, pick top 3 by stars
-  const selected = (FEATURED_REPOS && FEATURED_REPOS.length)
-    ? FEATURED_REPOS.map(name => repos.find(r => r.name === name || r.full_name === name)).filter(Boolean)
-    : repos.slice().sort((a,b)=>b.stargazers_count - a.stargazers_count).slice(0,3);
-  if (!selected.length){
-    const section = mount.closest('section');
-    if (section) section.style.display = 'none';
-    return;
-  }
-  mount.innerHTML = selected.map(r => `
-    <article class="panel feat-card">
-      <div class="badges">
-        ${r.language ? `<span class="badge">${r.language}</span>` : ''}
-        <span class="badge">★ ${r.stargazers_count}</span>
-        <span class="badge">Updated ${formatDate(r.updated_at)}</span>
-      </div>
-      <h3>${r.name}</h3>
-      <p class="desc">${r.description ?? ''}</p>
-      <div class="actions">
-        ${demoButton(r)}
-        <a class="btn" href="${r.html_url}" target="_blank" rel="noreferrer">Source</a>
-        <a class="btn" href="/case-studies/${r.name}.html">Case study</a>
-      </div>
-    </article>
-  `).join('');
-
-function demoButton(r){
-  const url = r.homepage || pagesUrl(r.owner, r.name);
-  return `<a class="btn primary" href="${url}" target="_blank" rel="noreferrer">Live demo</a>`;
-}
-
-function renderLangOptions(repos){
-  const sel = document.getElementById('lang');
-  const langs = Array.from(new Set(repos.map(r => r.language).filter(Boolean))).sort();
-  sel.innerHTML = '<option value="">Any</option>' + langs.map(l => `<option>${l}</option>`).join('');
-}
-
-function renderGrid(repos){
-  const q = document.getElementById('q').value.trim().toLowerCase();
-  const lang = document.getElementById('lang').value;
-  const sort = document.getElementById('sort').value;
-
-  let list = repos.slice();
-
-  if (q){
-    list = list.filter(r =>
-      (r.name && r.name.toLowerCase().includes(q)) ||
-      (r.description && r.description.toLowerCase().includes(q)) ||
-      (r.topics && r.topics.join(' ').toLowerCase().includes(q))
-    );
-  }
-  if (lang){ list = list.filter(r => r.language === lang); }
-
-  if (sort === 'stars') list.sort((a,b)=>b.stargazers_count - a.stargazers_count);
-  else if (sort === 'updated') list.sort((a,b)=> new Date(b.updated_at) - new Date(a.updated_at));
-  else if (sort === 'alpha') list.sort((a,b)=> a.name.localeCompare(b.name));
-
-  const grid = document.getElementById('grid');
-  const empty = document.getElementById('empty');
-
-  grid.innerHTML = list.map(r => `
-    <article class="panel card">
-      <div class="title-row">
-        <h4>${r.name}</h4>
+/* ==== RENDER ==== */
+function renderLatest(repos){
+  const latest = document.getElementById('latest');
+  const empty  = document.getElementById('latest-empty');
+  const top = repos.slice().sort(sortByUpdated).slice(0,3);
+  if(!top.length){ empty.style.display='block'; return; }
+  empty.style.display='none';
+  latest.innerHTML = top.map(r=>{
+    const homepage = (r.homepage && r.homepage.trim())
+      ? r.homepage
+      : `https://${r.owner.login}.github.io/${r.name}/`;
+    return `
+      <article class="panel card">
+        <h3>${r.name}</h3>
+        <p class="desc">${r.description || ''}</p>
         <div class="badges">
           ${r.language ? `<span class="badge">${r.language}</span>` : ''}
           <span class="badge">★ ${r.stargazers_count}</span>
+          <span class="badge">Updated ${fmtDate(r.updated_at)}</span>
         </div>
-      </div>
-      <p class="desc">${r.description ?? ''}</p>
-      <div class="topics">
-        ${(r.topics || []).slice(0,6).map(t=>`<span class="badge">#${t}</span>`).join('')}
-      </div>
-      <div class="meta">
-        <span>Updated ${formatDate(r.updated_at)}</span>
-        ${r.archived ? '<span>· Archived</span>' : ''}
-      </div>
-      <div class="actions">
-        ${demoButton(r)}
-        <a class="btn" href="${r.html_url}" target="_blank" rel="noreferrer">Source</a>
-        <a class="btn" href="/case-studies/${r.name}.html">Case study</a>
-      </div>
-    </article>
-  `).join('');
-
-  empty.hidden = list.length !== 0;
-  document.getElementById('count').textContent = list.length;
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+          <a class="btn primary" href="${homepage}" target="_blank" rel="noreferrer">Live demo</a>
+          <a class="btn" href="${r.html_url}" target="_blank" rel="noreferrer">Source</a>
+          <a class="btn" href="/case-studies/${r.name}.html">Case study</a>
+        </div>
+      </article>`;
+  }).join('');
 }
 
+/* ==== INIT ==== */
 (async function init(){
-  // Fetch profile for avatar + bio + stats
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Update hero bio if available; safe even if #bio is missing
   try {
-    const u = await fetch(`https://api.github.com/users/${GH_USER}`, { headers: { 'Accept': 'application/vnd.github+json' }}).then(r=>r.json());
-    const avatar = document.getElementById('avatar');
-    if (u && u.avatar_url){ avatar.src = u.avatar_url; }
-    if (u && u.bio){ document.getElementById('bio').textContent = u.bio; }
-    if (u && typeof u.public_repos === 'number'){
-      const s = document.getElementById('stats');
-      document.getElementById('stat-repos').textContent = `${u.public_repos} public repos`;
-      document.getElementById('stat-followers').textContent = `${u.followers} followers`;
-      document.getElementById('stat-following').textContent = `${u.following} following`;
-      s.hidden = false;
-    }
-  } catch (e) { /* ignore */ }
+    const u = await fetchUser();
+    const bioEl = document.getElementById('bio');
+    if (bioEl && u && u.bio) bioEl.textContent = u.bio;
+  } catch(e){ /* ignore for resilience */ }
 
-  const all = await fetchRepos().catch(err => ({ error: err.message }));
-  if (all.error){
-    document.getElementById('grid').outerHTML = `<div class="empty">${all.error}. You might be rate limited. Try again soon or add a GitHub token fetch.</div>`;
-    return;
+  // Render Latest from repos
+  try {
+    const repos = await fetchRepos();
+    renderLatest(repos);
+  } catch(e){
+    const empty = document.getElementById('latest-empty');
+    if (empty) empty.textContent = "GitHub rate limited or unavailable right now. Try again in a bit.";
   }
-  window.__REPOS__ = all;
-  renderLangOptions(all);
-  renderFeatured(all);
-  renderGrid(all);
-
-  // wire controls
-  document.getElementById('q').addEventListener('input', ()=>renderGrid(all));
-  document.getElementById('lang').addEventListener('change', ()=>renderGrid(all));
-  document.getElementById('sort').addEventListener('change', ()=>renderGrid(all));
-  document.getElementById('reset').addEventListener('click', ()=>{
-    document.getElementById('q').value='';
-    document.getElementById('lang').value='';
-    document.getElementById('sort').value='stars';
-    renderGrid(all);
-  });
 })();
 </script>
 </body>
