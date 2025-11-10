@@ -196,9 +196,18 @@ async function fetchAll(){
 function fmtDate(iso){ return new Date(iso).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}); }
 
 function demoButton(r){
-  const url = r.homepage || pagesUrl(r.owner, r.name);
-  return `<a class="btn primary" href="${url}" target="_blank" rel="noreferrer">Live demo</a>`;
+  // If repo provides an explicit homepage, use it
+  if (r.homepage && r.homepage.trim()) {
+    return `<a class="btn primary" href="${r.homepage}" target="_blank" rel="noreferrer">Live demo</a>`;
+  }
+  // If it's your repo, try GitHub Pages convention; otherwise link to the repo
+  if (r.owner && r.owner.toLowerCase() === "rspahn-dev") {
+    return `<a class="btn primary" href="https://${r.owner}.github.io/${r.name}/" target="_blank" rel="noreferrer">Live demo</a>`;
+  }
+  // Collaborations default to repo (Flutter apps, libraries, etc.)
+  return `<a class="btn primary" href="${r.html_url}" target="_blank" rel="noreferrer">Open repo</a>`;
 }
+
 
 function cardHTML(r){
   const forkBadge = r.fork ? '<span class="badge">Fork</span>' : '';
@@ -282,9 +291,9 @@ function renderSections(all){
 
   currentGrid.innerHTML = current ? cardHTML(current) : `<div class="empty" style="grid-column:1/-1">No current project found.</div>`;
 
-  // Remove current from the other lists
+  // Remove current from Personal list only (keep it in Collaborations if it's a collab)
   const currentId = current ? current.id : -1;
-  const collabList = collaborations.filter(r => r.id !== currentId);
+  const collabList   = collaborations; // keep current if it's a collab
   const personalList = personal.filter(r => r.id !== currentId);
 
   collabGrid.innerHTML   = collabList.map(cardHTML).join('');
