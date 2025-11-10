@@ -160,9 +160,10 @@ async function fetchRepoByFullName(full){
   const res = await fetch(url, { headers: GH_HEADERS });
   if(!res.ok) throw new Error(`GitHub API ${res.status} for ${full}`);
   const r = await res.json();
-  if (r.fork) return null;
-  return mapRepo(r);
+  // Keep forks for explicit COLLAB_REPOS (you asked for it explicitly)
+  return mapRepo(r); 
 }
+
 
 function mapRepo(r){
   return {
