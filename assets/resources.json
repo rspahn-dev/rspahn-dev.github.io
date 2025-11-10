@@ -1,0 +1,184 @@
+{
+  "items": [
+    // ---------- Beginner (10) ----------
+    {
+      "title": "Project README template",
+      "desc": "Clean README skeleton with badges, install/run, screenshots, and license block.",
+      "type": "Template",
+      "level": "Beginner",
+      "tags": ["docs", "git", "basics"],
+      "file": "/resources/templates/readme-template.md",
+      "href": "https://www.makeareadme.com/"
+    },
+    {
+      "title": "Issue template (bug)",
+      "desc": "GitHub issue template: environment, steps to reproduce, expected/actual.",
+      "type": "Template",
+      "level": "Beginner",
+      "tags": ["github", "workflow"],
+      "file": "/resources/templates/.github/ISSUE_TEMPLATE/bug.yml",
+      "href": "https://docs.github.com/issues/using-labels-and-milestones/creating-issue-templates-for-your-repository"
+    },
+    {
+      "title": "Pull request template",
+      "desc": "Sections for summary, screenshots, checklist, and accessibility notes.",
+      "type": "Template",
+      "level": "Beginner",
+      "tags": ["github", "reviews"],
+      "file": "/resources/templates/.github/pull_request_template.md",
+      "href": "https://docs.github.com/pull-requests/about-issue-and-pull-request-templates"
+    },
+    {
+      "title": "Accessibility quick checklist",
+      "desc": "Headings, labels, color contrast, focus order, and keyboard traps.",
+      "type": "Checklist",
+      "level": "Beginner",
+      "tags": ["a11y", "wcag", "ui"],
+      "file": "/resources/checklists/a11y-quick.md",
+      "href": "https://www.a11yproject.com/checklist/"
+    },
+    {
+      "title": "SEO meta partial",
+      "desc": "HTML head block for title, description, OG/Twitter tags.",
+      "type": "Template",
+      "level": "Beginner",
+      "tags": ["seo", "meta"],
+      "file": "/resources/snippets/seo-head.html",
+      "href": "https://developer.mozilla.org/docs/Learn/HTML/Introduction_to_HTML/The_head_metadata_in_HTML"
+    },
+    {
+      "title": "robots.txt + sitemap.xml",
+      "desc": "Starter files for simple static sites.",
+      "type": "Template",
+      "level": "Beginner",
+      "tags": ["seo", "crawl"],
+      "file": "/resources/templates/robots.txt",
+      "href": "https://developers.google.com/search/docs/crawling-indexing/robots/intro"
+    },
+    {
+      "title": "GitHub Pages CNAME",
+      "desc": "Explains custom domain + CNAME file placement.",
+      "type": "Doc",
+      "level": "Beginner",
+      "tags": ["dns", "github-pages"],
+      "file": "/resources/docs/gh-pages-cname.md",
+      "href": "https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site"
+    },
+    {
+      "title": "README badges cheat-sheet",
+      "desc": "Common Shields.io badges for CI, license, coverage.",
+      "type": "Doc",
+      "level": "Beginner",
+      "tags": ["readme", "badges"],
+      "href": "https://shields.io/category/build"
+    },
+    {
+      "title": "Basic .gitignore",
+      "desc": "Node, Python, and common OS files ignored.",
+      "type": "Template",
+      "level": "Beginner",
+      "tags": ["git", "hygiene"],
+      "file": "/resources/templates/.gitignore",
+      "href": "https://github.com/github/gitignore"
+    },
+    {
+      "title": "License chooser",
+      "desc": "Pick a permissive license for small projects.",
+      "type": "Doc",
+      "level": "Beginner",
+      "tags": ["license", "open-source"],
+      "href": "https://choosealicense.com/"
+    },
+
+    // ---------- Intermediate (10) ----------
+    {
+      "title": "CONTRIBUTING.md",
+      "desc": "How to run, test, commit, branch, and open PRs—including a11y and testing expectations.",
+      "type": "Template",
+      "level": "Intermediate",
+      "tags": ["oss", "docs"],
+      "file": "/resources/templates/CONTRIBUTING.md",
+      "href": "https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-community-profiles-for-public-repositories"
+    },
+    {
+      "title": "CODE_OF_CONDUCT.md",
+      "desc": "Contributor Covenant v2.1 with contact customization.",
+      "type": "Template",
+      "level": "Intermediate",
+      "tags": ["oss", "community"],
+      "file": "/resources/templates/CODE_OF_CONDUCT.md",
+      "href": "https://www.contributor-covenant.org/version/2/1/code_of_conduct/"
+    },
+    {
+      "title": "Security policy",
+      "desc": "Responsible disclosure guide and contact.",
+      "type": "Template",
+      "level": "Intermediate",
+      "tags": ["security", "oss"],
+      "file": "/resources/templates/SECURITY.md",
+      "href": "https://docs.github.com/code-security/getting-started/adding-a-security-policy-to-your-repository"
+    },
+    {
+      "title": "Privacy policy starter",
+      "desc": "Static site privacy skeleton (no tracking, minimal logs).",
+      "type": "Template",
+      "level": "Intermediate",
+      "tags": ["privacy", "legal"],
+      "file": "/resources/templates/PRIVACY.md",
+      "href": "https://www.privacyguides.org/en/"
+    },
+    {
+      "title": "Lighthouse CI GitHub Action",
+      "desc": "Automated performance/a11y checks on PRs.",
+      "type": "Script",
+      "level": "Intermediate",
+      "tags": ["ci", "lighthouse", "a11y"],
+      "file": "/resources/workflows/lighthouse-ci.yml",
+      "href": "https://github.com/GoogleChrome/lighthouse-ci"
+    },
+    {
+      "title": "Sitemap generator script",
+      "desc": "Tiny Node script to crawl / and output sitemap.xml.",
+      "type": "Script",
+      "level": "Intermediate",
+      "tags": ["node", "seo"],
+      "file": "/resources/scripts/make-sitemap.js",
+      "href": "https://developer.mozilla.org/docs/Glossary/Sitemap"
+    },
+    {
+      "title": "Open Graph image template (1200x630)",
+      "desc": "Figma/Canva template + export notes.",
+      "type": "Template",
+      "level": "Intermediate",
+      "tags": ["og", "images", "social"],
+      "href": "https://ogp.me/"
+    },
+    {
+      "title": "Accessible color tokens",
+      "desc": "JSON palette with AA/AAA contrast pairs called out.",
+      "type": "Template",
+      "level": "Intermediate",
+      "tags": ["design-tokens", "a11y"],
+      "file": "/resources/templates/colors.tokens.json",
+      "href": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html"
+    },
+    {
+      "title": "Keyboard testing script",
+      "desc": "Short checklist for tab order, focus traps, and landmarks.",
+      "type": "Checklist",
+      "level": "Intermediate",
+      "tags": ["a11y", "testing"],
+      "file": "/resources/checklists/keyboard.md",
+      "href": "https://web.dev/learn/accessibility/"
+    },
+    {
+      "title": "Static site security headers",
+      "desc": "Example Netlify/Cloudflare headers incl. CSP starter.",
+      "type": "Template",
+      "level": "Intermediate",
+      "tags": ["security", "headers"],
+      "file": "/resources/templates/_headers",
+      "href": "https://developer.mozilla.org/docs/Web/HTTP/Headers/Content-Security-Policy"
+    }
+  ]
+}
